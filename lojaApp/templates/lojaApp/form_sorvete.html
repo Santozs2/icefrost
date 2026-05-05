@@ -1,0 +1,17 @@
+{% extends 'lojaApp/base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<h2>{{ titulo }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        {{ form.as_p }}
+        
+        <button type="submit">✓ Salvar</button>
+        <button type="button" onclick="window.history.back();">✗ Cancelar</button>
+    </div>
+</form>
+{% endblock %}

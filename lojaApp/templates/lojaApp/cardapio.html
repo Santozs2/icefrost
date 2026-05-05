@@ -1,0 +1,61 @@
+{% extends 'lojaApp/base.html' %}
+{% load static %}
+
+{% block title %}Cardápio{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">Cardápio</h2>
+<div class="cardapio-container">
+    {% for sorvete in sorvetes %}
+    <div class="cardapio-item" data-index="{{ forloop.counter0 }}">
+       <div class="cardapio-image-area">
+            {% with forloop.counter|stringformat:"02d" as num %}
+            <img src="{% static 'img/'|add:num|add:'.jpg' %}" 
+                alt="{{ sorvete.sabor }}"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            
+            <div class="no-image-placeholder" style="display: none;">
+                <i class="fa-solid fa-ice-cream"></i>
+                <span>Imagem em breve</span>
+            </div>
+            {% endwith %}
+        </div>
+        <h3>{{ sorvete.sabor }}</h3>
+        <p>{{ sorvete.descricao }}</p>  
+        <p class="preco">R$ {{ sorvete.preco }}</p>
+        <p class="opcaoDietica">
+            {% for opcao in sorvete.opcoes_dieticas.all %}
+                {{ opcao.nome }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="sorveteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="fecharModal()">&times;</span>
+        <img id="modal-img" src="" alt="Sorvete">
+        <h3 id="modal-titulo"></h3>
+        <p id="modal-desc"></p>
+        <p class="preco" id="modal-preco"></p>
+        
+    </div>
+</div>
+
+<script id="sorvetes-data" type="application/json">
+[
+    {% for sorvete in sorvetes %}
+    {% with forloop.counter|stringformat:"02d" as num %}
+    {
+        "img": "{% static 'img/'|add:num|add:'.jpg' %}",
+        "titulo": "{{ sorvete.sabor|escapejs }}",
+        "desc": "{{ sorvete.descricao|escapejs }}",
+        "preco": "R$ {{ sorvete.preco }}",
+        "opcoes_dieticas": [{% for opcao in sorvete.opcoes_dieticas.all %}"{{ opcao.nome|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]
+    }{% if not forloop.last %},{% endif %}
+    {% endwith %}
+    {% endfor %}
+]
+</script>
+{% endblock %}

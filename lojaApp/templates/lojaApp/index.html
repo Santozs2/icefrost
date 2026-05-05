@@ -1,0 +1,14 @@
+{% extends 'lojaApp/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <span class="badge">Premium Quality</span>
+        <h1>Delicie-se com o <span class="highlight">Melhor Sorvete</span> da Região!</h1>
+        <p>Descubra nossos sabores exclusivos, feitos com ingredientes frescos e muito amor. Uma explosão de alegria a cada colherada.</p>
+        <a href="{% url 'cardapio' %}" class="btn-primary pulse-anim">Ver Nosso Cardápio <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+</div>
+{% endblock %}

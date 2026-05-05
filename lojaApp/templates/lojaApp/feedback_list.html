@@ -1,0 +1,40 @@
+{% extends 'lojaApp/base.html' %}
+
+{% block title %}Comentários{% endblock %}
+
+{% block content %}
+<div class="comment-list-section">
+    <h2 class="titulo-sessao">Feedback dos Clientes</h2>
+
+    <div class="header-acoes">
+        <a href="{% url 'cadastrarComentario' %}" class="btn-primary-soft">
+            <i class="fa-solid fa-plus"></i> Novo Comentário
+        </a>
+    </div>
+
+    <div class="comments-container">
+        {% for comentario in lista %}
+        <div class="comment-card">
+            <div class="comment-header">
+                <div>
+                    <span class="comment-author"><i class="fa-solid fa-user"></i> {{ comentario.nome }}</span>
+                    <span class="comment-email">{{ comentario.email }}</span>
+                </div>
+
+                <div class="comment-actions">
+                    <a href="{% url 'editarComentario' comentario.id %}" class="btn-action edit" title="Editar">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a href="{% url 'excluirComentario' comentario.id %}" class="btn-action delete"
+                        onclick="return confirm('Tem certeza que deseja apagar este comentário de {{ comentario.nome }}?');"
+                        title="Excluir">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+            <p class="comment-body">"{{ comentario.mensagem }}"</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

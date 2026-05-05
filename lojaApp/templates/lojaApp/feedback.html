@@ -1,0 +1,17 @@
+{% extends 'lojaApp/base.html' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<div class="feedback-form-container">
+    <h2>Feedback</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-submit-premium">Enviar Feedback</button>
+    </form>
+    <p style="text-align: center; margin-top: 20px;">
+        <a href="{% url 'index' %}" style="color: var(--coral);">Voltar para o início</a>
+    </p>
+</div>
+{% endblock %}

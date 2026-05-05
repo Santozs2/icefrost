@@ -1,0 +1,47 @@
+{% extends 'lojaApp/base.html' %}
+{% load static %}
+
+{% block title %}Galeria de Delícias - IceFrost{% endblock %}
+
+{% block content %}
+<section class="gallery-section">
+    <div class="gallery-header">
+        <span class="badge">Nossas Obras de Arte</span>
+        <h2>Galeria de Sabores</h2>
+        <p>Explore a textura e as cores dos nossos sorvetes artesanais.</p>
+    </div>
+
+    <div class="gallery-grid">
+        {% for sorvete in sorvetes %}
+            <div class="gallery-item">
+                <div class="gallery-image-wrapper">
+                    <div class="cardapio-image-area">
+                        {% with forloop.counter|stringformat:"02d" as num %}
+                        <img src="{% static 'img/'|add:num|add:'.jpg' %}" 
+                            alt="{{ sorvete.sabor }}"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <div class="no-image-placeholder" style="display: none;">
+                            <i class="fa-solid fa-ice-cream"></i>
+                            <span>Imagem em breve</span>
+                        </div>
+                        {% endwith %}
+                    </div>
+                <div class="gallery-overlay">
+                    <span class="gallery-category">Premium</span>
+                    <h3 class="gallery-title">{{ sorvete.sabor }}</h3>
+                    <div class="gallery-divider"></div>
+                    <p class="gallery-desc">{{ sorvete.descricao|truncatewords:10 }}</p>
+                    <a href="{% url 'cardapio' %}" class="btn-gallery">Ver no Cardápio</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-gallery">
+            <i class="fa-solid fa-ice-cream"></i>
+            <p>Nenhum sorvete disponível para exibição no momento.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
